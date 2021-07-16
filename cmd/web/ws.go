@@ -19,13 +19,16 @@ var upgrader = websocket.Upgrader{
 }
 
 func (c connection) write(messageType int, payload []byte) error {
-	fmt.Printf("Writing message %s of type %d", string(payload), messageType)
+	fmt.Printf("Writing message %s of type %d\n", string(payload), messageType)
 
 	if err := c.ws.SetWriteDeadline(time.Now().Add(writeWait)); err != nil {
 		return err
 	}
 
-	return c.ws.WriteMessage(messageType, payload)
+	return c.ws.WriteJSON(map[string]interface{}{
+		"messageType": messageType,
+		"body":        string(payload),
+	})
 }
 
 func serveWebsockets(w http.ResponseWriter, r *http.Request, roomID string) {

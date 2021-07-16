@@ -8,7 +8,7 @@
 <div id="log"></div>
 <form id="form">
     <label for="message"></label>
-    <input type="text" id="message" autofocus size="64">
+    <input type="text" id="message" autofocus size="64" autocomplete="off">
     <input type="submit" value="Send">
 </form>
 
@@ -34,13 +34,12 @@
         ws = new WebSocket(wsURL)
 
         ws.onmessage = (e) => {
-            let messages = e.data.split('\n')
-            for (let i = 0; i < messages.length; i++) {
-                let item = document.createElement('div')
-                item.innerText = messages[i]
+            let message = JSON.parse(e.data)
 
-                appendLog(item)
-            }
+            let item = document.createElement('div')
+            item.innerText = message.body
+
+            appendLog(item)
         }
 
         let message = document.getElementById("message")
