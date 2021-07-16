@@ -18,8 +18,12 @@ func main() {
 	router := gin.New()
 	router.LoadHTMLFiles(htmlFiles...)
 
-	router.GET("/room/:roomID", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
+	})
+
+	router.GET("/room/:roomID", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "chat.html", nil)
 	})
 
 	router.GET("/ws/:roomID", func(c *gin.Context) {
