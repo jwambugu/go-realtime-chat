@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nullify Chat</title>
+</head>
+<body>
+<div id="log"></div>
+<form id="form">
+    <label for="message"></label>
+    <input type="text" id="message" autofocus size="64" autocomplete="off">
+    <input type="submit" value="Send">
+</form>
+
+<script type="text/javascript">
+    window.onload = () => {
+        function appendLog(item) {
+            let doScroll = log.scrollTop > log.scrollHeight - log.clientHeight - 1;
+            log.appendChild(item);
+            if (doScroll) {
+                log.scrollTop = log.scrollHeight - log.clientHeight;
+            }
+        }
+
+        let ws;
+        let log = document.getElementById("log")
+
+        const params = location.href.split("/")
+        const roomID = params[params.length - 1]
+        const host = document.location.host
+        const wsURL = "ws://" + host + "/ws/" + roomID
+
+        console.log(wsURL)
+        ws = new WebSocket(wsURL)
+
+        ws.onmessage = (e) => {
+            let message = JSON.parse(e.data)
+
+            let item = document.createElement('div')
+            item.innerText = message.body
+
+            appendLog(item)
+        }
+
+        let message = document.getElementById("message")
+
+        document.getElementById("form").onsubmit = (e) => {
+            e.preventDefault()
+
+            if (!ws || !message.value) {
+                return
+            }
+
+            ws.send(message.value)
+            message.value = ""
+        }
+    }
+</script>
+</body>
+</html>
