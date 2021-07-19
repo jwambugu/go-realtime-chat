@@ -26,7 +26,11 @@ Start the webserver
 
 To access the chat application, make sure you start the webserver then open ```http://localhot:8080```
 
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+![Logo](https://github.com/jwambugu/go-realtime-chat/blob/main/screenshots/Screenshot%202021-07-19%20at%2008.53.32.png?raw=true)
+
+Enter the chatroom name then create the room then have fun chatting 🎉
+
+Here is a sample
 
     
 
